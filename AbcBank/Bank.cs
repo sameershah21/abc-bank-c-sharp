@@ -43,18 +43,5 @@ namespace AbcBank
             return total;
         }
 
-        public String getFirstCustomer()
-        {
-            try
-            {
-                customers = null;
-                return customers[0].getName();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return "Error";
-            }
-        }
     }
 }
