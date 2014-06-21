@@ -38,6 +38,10 @@ namespace AbcBank
             }
         }
 
+        /// <summary>
+        /// Withdraws funds from existing account
+        /// </summary>
+        /// <param name="amount"></param>
         public void withdraw(double amount)
         {
             if (amount <= 0)
@@ -50,22 +54,22 @@ namespace AbcBank
             }
         }
 
+        /// <summary>
+        /// Interest on balance based on type of account
+        /// </summary>
+        /// <returns></returns>
         public double interestEarned()
         {
             double amount = sumTransactions();
             if(this.accountType.getName()== "SAVINGS")
-            //switch(this.accountType())
-            {
-              //  case SAVINGS  :
+            { 
                     if (amount <= 1000)
                         return amount * 0.001;
                     else
                         return 1 + (amount - 1000) * 0.002;
-                // case SUPER_SAVINGS:
-                //     if (amount <= 4000)
-            }    //         return 20;
+            } 
             if(this.accountType.getName()== "MAXI_SAVINGS")
-            {//case "MAXI_SAVINGS":
+            {
                     if (amount <= 1000)
                         return amount * 0.02;
                     if (amount <= 2000)
@@ -73,11 +77,13 @@ namespace AbcBank
                  return 70 + (amount - 2000) * 0.1;
             }
             else
-                //default:
                     return amount * 0.001;
          }
         
-
+        /// <summary>
+        /// Calculate total of all transactions
+        /// </summary>
+        /// <returns></returns>
         public double sumTransactions()
         {
             double amount = 0.0;
@@ -86,11 +92,19 @@ namespace AbcBank
             return amount;
         }
 
+        /// <summary>
+        /// Returns the type of Account
+        /// </summary>
+        /// <returns></returns>
         public AccountType getType()
         {
             return accountType;
         }
 
+        /// <summary>
+        /// Returns the type name of the account
+        /// </summary>
+        /// <returns></returns>
         public string getTypeName()
         {
             return accountType.getName();
