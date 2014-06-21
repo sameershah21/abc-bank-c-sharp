@@ -34,7 +34,8 @@ namespace AbcBank
             }
             else
             {
-                transactions.Add(new Transaction(amount));
+                //a new transaction should be created to deposit
+                transactions.Add(new Transaction(amount, TransactionType.DEPOSIT));
             }
         }
 
@@ -50,7 +51,8 @@ namespace AbcBank
             }
             else
             {
-                transactions.Add(new Transaction(-amount));
+                // a new transaction should be created to withdraw
+                transactions.Add(new Transaction(-amount, TransactionType.WITHDRAW));
             }
         }
 

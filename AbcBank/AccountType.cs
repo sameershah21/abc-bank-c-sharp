@@ -36,10 +36,10 @@ namespace AbcBank
             return acctTypeID;
         }
 
-        /**
-         * Get the name associated with the AccountType
-         * @return - the account type name
-         */
+        /// <summary>
+        /// Get Name of the account
+        /// </summary>
+        /// <returns></returns>
         public String getName()
         {
             return name;
