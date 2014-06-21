@@ -63,17 +63,18 @@ namespace AbcBank
         private String statementForAccount(Account a)
         {
             String s = "";
-
+           
             //Translate to pretty account type
-            switch (a.getAccountType())
+            
+            switch (a.getTypeName())
             {
-                case Account.CHECKING:
+                case "CHECKING":
                     s += "Checking Account\n";
                     break;
-                case Account.SAVINGS:
+                case "SAVINGS":
                     s += "Savings Account\n";
                     break;
-                case Account.MAXI_SAVINGS:
+                case "MAXI_SAVINGS":
                     s += "Maxi Savings Account\n";
                     break;
             }

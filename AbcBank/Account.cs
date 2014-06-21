@@ -9,19 +9,23 @@ namespace AbcBank
     public class Account
     {
 
-        public const int CHECKING = 0;
-        public const int SAVINGS = 1;
-        public const int MAXI_SAVINGS = 2;
-
-        private readonly int accountType;
+        private readonly AccountType accountType;
         public List<Transaction> transactions;
 
-        public Account(int accountType)
+        /// <summary>
+        /// make an object of Account
+        /// </summary>
+        /// <param name="_type"></param>
+        public Account(AccountType _type)
         {
-            this.accountType = accountType;
+            this.accountType = _type;
             this.transactions = new List<Transaction>();
         }
 
+        /// <summary>
+        /// will deposit amount to current account
+        /// </summary>
+        /// <param name="amount"></param>
         public void deposit(double amount)
         {
             if (amount <= 0)
@@ -49,33 +53,32 @@ namespace AbcBank
         public double interestEarned()
         {
             double amount = sumTransactions();
-            switch (accountType)
+            if(this.accountType.getName()== "SAVINGS")
+            //switch(this.accountType())
             {
-                case SAVINGS:
+              //  case SAVINGS  :
                     if (amount <= 1000)
                         return amount * 0.001;
                     else
                         return 1 + (amount - 1000) * 0.002;
                 // case SUPER_SAVINGS:
                 //     if (amount <= 4000)
-                //         return 20;
-                case MAXI_SAVINGS:
+            }    //         return 20;
+            if(this.accountType.getName()== "MAXI_SAVINGS")
+            {//case "MAXI_SAVINGS":
                     if (amount <= 1000)
                         return amount * 0.02;
                     if (amount <= 2000)
                         return 20 + (amount - 1000) * 0.05;
-                    return 70 + (amount - 2000) * 0.1;
-                default:
-                    return amount * 0.001;
+                 return 70 + (amount - 2000) * 0.1;
             }
-        }
+            else
+                //default:
+                    return amount * 0.001;
+         }
+        
 
         public double sumTransactions()
-        {
-            return checkIfTransactionsExist(true);
-        }
-
-        private double checkIfTransactionsExist(bool checkAll)
         {
             double amount = 0.0;
             foreach (Transaction t in transactions)
@@ -83,10 +86,14 @@ namespace AbcBank
             return amount;
         }
 
-        public int getAccountType()
+        public AccountType getType()
         {
             return accountType;
         }
 
+        public string getTypeName()
+        {
+            return accountType.getName();
+        }
     }
 }
