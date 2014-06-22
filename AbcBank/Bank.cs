@@ -7,30 +7,36 @@ namespace AbcBank
     {
         private List<Customer> customers;
 
+        /// <summary>
+        /// Creates a bank full of customers
+        /// </summary>
         public Bank()
         {
             customers = new List<Customer>();
         }
 
+        /// <summary>
+        /// Adds a customer with a customer name to the bank
+        /// </summary>
+        /// <param name="customer"></param>
         public void addCustomer(Customer customer)
         {
             customers.Add(customer);
         }
 
+        /// <summary>
+        /// Generates a customer summary with info like customer name, number of accounts opened, etc
+        /// </summary>
+        /// <returns></returns>
         public String customerSummary()
         {
             String summary = "Customer Summary";
             foreach (Customer c in customers)
-                summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
+                summary += "\n - " + c.getName() + " (" + CommonFunctions.pluralFormatter(c.getNumberOfAccounts(), "account") + ")";
             return summary;
         }
 
-        //Make sure correct plural of word is created based on the number passed in:
-        //If number passed in is 1 just return the word otherwise add an 's' at the end
-        private String format(int number, String word)
-        {
-            return number + " " + (number == 1 ? word : word + "s");
-        }
+
 
         public double totalInterestPaid()
         {

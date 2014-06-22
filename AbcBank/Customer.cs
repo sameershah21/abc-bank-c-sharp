@@ -8,28 +8,49 @@ namespace AbcBank
         private String name;
         private List<Account> accounts;
 
+        /// <summary>
+        /// Create a customer with name and type of account(a) that he/she would like to open
+        /// </summary>
+        /// <param name="name"></param>
         public Customer(String name)
         {
             this.name = name;
             this.accounts = new List<Account>();
         }
 
+        /// <summary>
+        /// Return the name of the customer
+        /// </summary>
+        /// <returns></returns>
         public String getName()
         {
             return name;
         }
 
+        /// <summary>
+        /// Add one or more account per customer. Will be called multiple times to add multiple accounts.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         public Customer openAccount(Account account)
         {
             accounts.Add(account);
             return this;
         }
 
+        /// <summary>
+        /// Returns how many type accounts does a customer have open with the bank
+        /// </summary>
+        /// <returns></returns>
         public int getNumberOfAccounts()
         {
             return accounts.Count;
         }
 
+        /// <summary>
+        /// Return the Interest earned totally. Its inclusive of all the accounts
+        /// </summary>
+        /// <returns></returns>
         public double totalInterestEarned()
         {
             double total = 0;
@@ -38,9 +59,11 @@ namespace AbcBank
             return total;
         }
 
-        /*******************************
-         * This method gets a statement
-         *********************************/
+        /// <summary>
+        /// This method will generate statements for all
+        /// accounts for a customer and total of all accounts all into one combined statement for a customer
+        /// </summary>
+        /// <returns></returns>
         public String getStatement()
         {
             //JIRA-123 Change by Joe Bloggs 29/7/1988 start
@@ -53,10 +76,15 @@ namespace AbcBank
                 statement += "\n" + statementForAccount(a) + "\n";
                 total += a.sumTransactions();
             }
-            statement += "\nTotal In All Accounts " + toDollars(total);
+            statement += "\nTotal In All Accounts " + CommonFunctions.toDollars(total);
             return statement;
         }
 
+        /// <summary>
+        /// This method will generate statement for a single account opened by a customer
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
         private String statementForAccount(Account a)
         {
             String s = "";
@@ -80,16 +108,13 @@ namespace AbcBank
             double total = 0.0;
             foreach (Transaction t in a.getTransactionList())
             {
-                s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
+                s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + CommonFunctions.toDollars(t.amount) + "\n";
                 total += t.amount;
             }
-            s += "Total " + toDollars(total);
+            s += "Total " + CommonFunctions.toDollars(total);
             return s;
         }
 
-        private String toDollars(double d)
-        {
-            return String.Format("${0:N2}", Math.Abs(d));
-        }
+
     }
 }
