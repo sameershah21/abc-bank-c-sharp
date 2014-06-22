@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace AbcBank
 {
-    public class Transaction
+    public abstract class Transaction
     {
-        public readonly double amount;
+        public readonly double amount=0.00;
         public readonly TransactionType transactionType;
 
         private DateTime transactionDate;
 
-        public Transaction(double amount, TransactionType _type)
+        // default constructor calling superclass constructor.
+        // Private will prevent the ablity to create null transactions.
+        // Removes the need to make readonly.
+        private Transaction(): base()  
+        {
+
+        }
+
+        //non-basic constructor calling base constructor
+        protected Transaction(double amount, TransactionType _type): this() 
         {
             this.amount = amount;
             this.transactionType = _type;
