@@ -22,7 +22,7 @@ namespace AbcBank
         {
             this.amount = amount;
             this.transactionType = _type;
-            this.transactionDate = DateProvider.getInstance().now();
+            this.transactionDate = CommonFunctions.now() ;
         }
 
     }
