@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 //Refactored code - created a seperate class for getting setting TransactionType for typesafety.
 //It shall contain all the possible types of transactions a bank shall have. Just like an account type. 

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AbcBank
 {
@@ -10,8 +7,10 @@ namespace AbcBank
     {
 
         private readonly AccountType accountType;
-        public List<Transaction> transactions;
+        //public List<Transaction> transactions;
+        private TransactionList transactions;
 
+        
         /// <summary>
         /// make an object of Account
         /// </summary>
@@ -19,7 +18,7 @@ namespace AbcBank
         public Account(AccountType _type)
         {
             this.accountType = _type;
-            this.transactions = new List<Transaction>();
+            this.transactions = new TransactionList(this);
         }
 
         /// <summary>
@@ -88,7 +87,21 @@ namespace AbcBank
 
         private void addTransactionToList(Transaction _t)
         {
-            transactions.Add(_t);
+            transactions.add(_t);
+        }
+
+        /// <summary>
+        /// return a list of all transactions for the account being processed 
+        /// </summary>
+        /// <returns></returns>
+        public TransactionList getTransactionList()
+        {
+            return transactions;
+        }
+
+        private void postTransaction(Transaction _t)
+        {
+            transactions.add(_t);
         }
 
         /// <summary>

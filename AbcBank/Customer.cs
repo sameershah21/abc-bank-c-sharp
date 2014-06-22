@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AbcBank
 {
@@ -81,7 +78,7 @@ namespace AbcBank
 
             //Now total up all the transactions
             double total = 0.0;
-            foreach (Transaction t in a.transactions)
+            foreach (Transaction t in a.getTransactionList())
             {
                 s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
                 total += t.amount;
