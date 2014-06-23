@@ -7,8 +7,8 @@ namespace AbcBank
     {
 
         private readonly AccountType accountType;
-        //public List<Transaction> transactions;
         private TransactionList transactions;
+        private double balance;
 
 
         
@@ -34,10 +34,10 @@ namespace AbcBank
             }
             else
             {
-                // a new transaction should be created to withdraw
+                // a new transaction should be created to deposit
                 Transaction t = new Deposit(amount);
                 // Add the transaction to the transaction list
-                this.addTransactionToList(t);
+                this.addIndividualTransaction(t);
 
                 return t;
             }
@@ -58,7 +58,7 @@ namespace AbcBank
                 // a new transaction should be created to withdraw
                 Transaction t = new Withdraw(-amount);
                 // Add the transaction to the transaction list
-                this.addTransactionToList(t);
+                this.addIndividualTransaction(t);
 
                 return t;
             }
@@ -77,18 +77,14 @@ namespace AbcBank
                 throw new ArgumentException("amount must be greater than zero");
             }
             // Create a transaction to transfer from
-            Transaction t = new TransferFrom(_account, _amount);
-            // Add the transaction to the transaction list
-            this.addTransactionToList(t);
+            Transaction t = new TransferFrom(_account, -_amount);
+
+            //Add individual transaction
+            this.addIndividualTransaction(t);
             //call function to transfer amount into
-            _account.transferInto(this, _amount);
+            _account.transferInto(this, +_amount);
 
             return t;
-        }
-
-        private void addTransactionToList(Transaction _t)
-        {
-            transactions.add(_t);
         }
 
         /// <summary>
@@ -100,9 +96,11 @@ namespace AbcBank
             return transactions;
         }
 
-        private void postTransaction(Transaction _t)
+        private void addIndividualTransaction(Transaction _t)
         {
             transactions.add(_t);
+            //transaction will have the remaining balance AFTER the transaction took place
+            this.balance = _t.amount;
         }
 
         /// <summary>
@@ -121,7 +119,7 @@ namespace AbcBank
             //Create a transaction to transfer amount into
             Transaction t = new TransferInto(_fromAccount, _amount);
             // Add the transaction to the transaction list
-            this.addTransactionToList(t);
+            this.addIndividualTransaction(t);
 
             return t;
         }
@@ -163,7 +161,7 @@ namespace AbcBank
                 amount += t.amount;
             return amount;
         }
-
+ 
         /// <summary>
         /// Returns the type of Account
         /// </summary>
@@ -180,6 +178,11 @@ namespace AbcBank
         public string getTypeName()
         {
             return accountType.getName();
+        }
+
+        public double getBalance()
+        {
+            return this.balance;
         }
     }
 }

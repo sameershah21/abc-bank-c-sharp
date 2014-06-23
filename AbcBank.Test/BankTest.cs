@@ -47,12 +47,29 @@ namespace AbcBank.Test
         public void maxi_savings_account()
         {
             Bank bank = new Bank();
-            Account checkingAccount = new Account(AccountType.MAXI_SAVINGS);
-            bank.addCustomer(new Customer("Bill").openAccount(checkingAccount));
+            Account maxiSavingsAccount = new Account(AccountType.MAXI_SAVINGS);
+            bank.addCustomer(new Customer("Bill").openAccount(maxiSavingsAccount));
 
-            checkingAccount.deposit(3000.0);
+            maxiSavingsAccount.deposit(3000.0);
 
             Assert.AreEqual(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        }
+
+        [Test]
+        public void acctTransferTest()
+        {
+            Bank bank = new Bank();
+            Account checkingAccount = new Account(AccountType.CHECKING);
+            Account savingsAccount = new Account(AccountType.SAVINGS);
+            Customer bill = new Customer("Bill");
+            bill.openAccount(savingsAccount);
+            bank.addCustomer(bill);
+
+            savingsAccount.deposit(50000.32);
+            savingsAccount.transfer(checkingAccount, 2000.99);
+            Assert.AreEqual(47999.33, savingsAccount.getBalance(), DOUBLE_DELTA);
+            Assert.AreEqual(2000.99, checkingAccount.getBalance(), DOUBLE_DELTA);
+
         }
 
     }
