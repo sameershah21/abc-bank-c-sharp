@@ -102,6 +102,10 @@ namespace AbcBank
             return transactions;
         }
 
+        /// <summary>
+        /// Just adds a single transaction to the list and updates the account balance
+        /// </summary>
+        /// <param name="_t"></param>
         private void addIndividualTransaction(Transaction _t)
         {
             transactions.add(_t);
@@ -109,6 +113,7 @@ namespace AbcBank
             this.balance = _t.amount;
         }
 
+        
         /// <summary>
         /// transfer amount into another account
         /// </summary>
