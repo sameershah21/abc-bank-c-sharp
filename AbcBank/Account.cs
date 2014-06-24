@@ -16,7 +16,7 @@ namespace AbcBank
 
 
 
-        
+
         /// <summary>
         /// make an object of Account
         /// </summary>
@@ -102,12 +102,17 @@ namespace AbcBank
             return transactions;
         }
 
+        /// <summary>
+        /// Just adds a single transaction to the list and updates the account balance
+        /// </summary>
+        /// <param name="_t"></param>
         private void addIndividualTransaction(Transaction _t)
         {
             transactions.add(_t);
             //transaction will have the remaining balance AFTER the transaction took place
             this.balance = _t.amount;
         }
+
 
         /// <summary>
         /// transfer amount into another account
@@ -117,9 +122,9 @@ namespace AbcBank
         /// <returns></returns>
         private Transaction transferInto(Account _fromAccount, double _amount)
         {
-            if (_amount<=0)
+            if (_amount <= 0)
             {
-                throw new ArgumentException("amount must be greater than zero"); 
+                throw new ArgumentException("amount must be greater than zero");
             }
 
             //Create a transaction to transfer amount into
@@ -142,22 +147,22 @@ namespace AbcBank
             double balance = getBalance();
             double initalInterestRate = 0.001;
             double OverThousandInterestRate = 0.002;
-            double conditionalMaxSaveInterestRate =0.05;
+            double conditionalMaxSaveInterestRate = 0.05;
             double amount = sumTransactions();
             //increased a little code readablity over here.
             //Added enhancements code for maxisavings
-            if(this.accountType.getName()== "SAVINGS")
-            { 
-                    if (amount <= 1000)
-                        interest = amount * initalInterestRate;
-                    else
-                        interest =  1000 * initalInterestRate + (amount - 1000) * OverThousandInterestRate ;
+            if (this.accountType.getName() == "SAVINGS")
+            {
+                if (amount <= 1000)
+                    interest = amount * initalInterestRate;
+                else
+                    interest = 1000 * initalInterestRate + (amount - 1000) * OverThousandInterestRate;
             }
             if (this.accountType.getName() == "CHECKING")
             {
-                    interest = amount * initalInterestRate;
+                interest = amount * initalInterestRate;
             }
-            if(this.accountType.getName()== "MAXI_SAVINGS")
+            if (this.accountType.getName() == "MAXI_SAVINGS")
             {
                 //if withdrawdate is null
                 if (withdrawDate == DateTime.MinValue)
@@ -166,8 +171,8 @@ namespace AbcBank
                 }
                 else
                 {
-                    TimeSpan duration = CommonFunctions.now()-withdrawDate;
-                    if (duration.Days>=10)
+                    TimeSpan duration = CommonFunctions.now() - withdrawDate;
+                    if (duration.Days >= 10)
                     {
                         calcRate = conditionalMaxSaveInterestRate;
                     }
@@ -177,11 +182,11 @@ namespace AbcBank
                     }
                 }
                 interest = balance * calcRate;
-                  
+
             }
             return interest;
-         }
-        
+        }
+
         /// <summary>
         /// Calculate total of all transactions
         /// </summary>
@@ -193,7 +198,7 @@ namespace AbcBank
                 amount += t.amount;
             return amount;
         }
- 
+
         /// <summary>
         /// Returns the type of Account
         /// </summary>
