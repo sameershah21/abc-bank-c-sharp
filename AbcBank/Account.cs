@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace AbcBank
 {
@@ -9,6 +10,10 @@ namespace AbcBank
         private readonly AccountType accountType;
         private TransactionList transactions;
         private double balance;
+
+        // for maxi savings account enahncements, to check if 
+        DateTime withdrawDate;
+
 
 
         
@@ -59,7 +64,8 @@ namespace AbcBank
                 Transaction t = new Withdraw(-amount);
                 // Add the transaction to the transaction list
                 this.addIndividualTransaction(t);
-
+                //note the withdraw date so that maxi savings can be checked on a previous withdraw, if present 
+                withdrawDate = t.transactionDate;
                 return t;
             }
         }
@@ -130,24 +136,50 @@ namespace AbcBank
         /// <returns></returns>
         public double interestEarned()
         {
+            //Store variables
+            double interest = 0.00;
+            double calcRate = 0.00;
+            double balance = getBalance();
+            double initalInterestRate = 0.001;
+            double OverThousandInterestRate = 0.002;
+            double conditionalMaxSaveInterestRate =0.05;
             double amount = sumTransactions();
+            //increased a little code readablity over here.
+            //Added enhancements code for maxisavings
             if(this.accountType.getName()== "SAVINGS")
             { 
                     if (amount <= 1000)
-                        return amount * 0.001;
+                        interest = amount * initalInterestRate;
                     else
-                        return 1 + (amount - 1000) * 0.002;
-            } 
+                        interest =  1000 * initalInterestRate + (amount - 1000) * OverThousandInterestRate ;
+            }
+            if (this.accountType.getName() == "CHECKING")
+            {
+                    interest = amount * initalInterestRate;
+            }
             if(this.accountType.getName()== "MAXI_SAVINGS")
             {
-                    if (amount <= 1000)
-                        return amount * 0.02;
-                    if (amount <= 2000)
-                        return 20 + (amount - 1000) * 0.05;
-                 return 70 + (amount - 2000) * 0.1;
+                //if withdrawdate is null
+                if (withdrawDate == DateTime.MinValue)
+                {
+                    calcRate = conditionalMaxSaveInterestRate;
+                }
+                else
+                {
+                    TimeSpan duration = CommonFunctions.now()-withdrawDate;
+                    if (duration.Days>=10)
+                    {
+                        calcRate = conditionalMaxSaveInterestRate;
+                    }
+                    else
+                    {
+                        calcRate = OverThousandInterestRate;
+                    }
+                }
+                interest = balance * calcRate;
+                  
             }
-            else
-                    return amount * 0.001;
+            return interest;
          }
         
         /// <summary>

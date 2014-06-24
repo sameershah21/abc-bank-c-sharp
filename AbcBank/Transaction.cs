@@ -6,8 +6,7 @@ namespace AbcBank
     {
         public readonly double amount=0.00;
         public readonly TransactionType transactionType;
-
-        private DateTime transactionDate;
+        public DateTime transactionDate;
 
         // default constructor calling superclass constructor.
         // Private will prevent the ablity to create null transactions.
